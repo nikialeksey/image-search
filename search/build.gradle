@@ -1,7 +1,7 @@
 import com.nikialeksey.interview.imagesearch.App
 import com.nikialeksey.interview.imagesearch.Deps
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'jacoco-android'
@@ -10,12 +10,10 @@ android {
     compileSdkVersion App.COMPILE_SDK_VERSION
     buildToolsVersion App.BUILD_TOOLS_VERSION
     defaultConfig {
-        applicationId App.APPLICATION_ID
         minSdkVersion App.MIN_SDK_VERSION
         targetSdkVersion App.TARGET_SDK_VERSION
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -30,7 +28,4 @@ dependencies {
     implementation Deps.ANDROID_CORE
 
     testImplementation Deps.JUNIT
-
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
