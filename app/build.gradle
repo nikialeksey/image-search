@@ -26,8 +26,11 @@ android {
 }
 
 dependencies {
+    implementation project(':search')
+
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
+    implementation Deps.NAVIGATION
 
     testImplementation Deps.JUNIT
 

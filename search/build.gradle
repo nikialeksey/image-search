@@ -26,6 +26,8 @@ android {
 dependencies {
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
+    implementation Deps.CONSTRAINT_LAYOUT
+    implementation Deps.RECYCLER_VIEW
 
     testImplementation Deps.JUNIT
 }
