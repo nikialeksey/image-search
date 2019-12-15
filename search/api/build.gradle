@@ -1,0 +1,32 @@
+import com.nikialeksey.interview.imagesearch.App
+import com.nikialeksey.interview.imagesearch.Deps
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'jacoco-android'
+
+android {
+    compileSdkVersion App.COMPILE_SDK_VERSION
+    buildToolsVersion App.BUILD_TOOLS_VERSION
+    defaultConfig {
+        minSdkVersion App.MIN_SDK_VERSION
+        targetSdkVersion App.TARGET_SDK_VERSION
+        versionCode App.VERSION_CODE
+        versionName App.VERSION_NAME
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':images:api')
+
+    implementation Deps.KOTLIN_CORE
+    implementation Deps.ANDROID_CORE
+    implementation Deps.NAVIGATION
+}

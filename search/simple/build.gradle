@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation project(':search:api')
     implementation project(':images:api')
     implementation project(':dict')
 
@@ -35,6 +36,7 @@ dependencies {
     implementation Deps.CONSTRAINT_LAYOUT
     implementation Deps.RECYCLER_VIEW
     implementation Deps.PAGING
+    implementation Deps.NAVIGATION
 
     implementation Deps.LIVE_DATA
     implementation Deps.VIEW_MODEL

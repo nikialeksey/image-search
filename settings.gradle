@@ -1,6 +1,8 @@
 include ':app'
 include ':dict'
-include ':search'
+include ':search:api'
+include ':search:simple'
+include ':show:simple'
 include ':images:api'
 include ':images:flickr'
 
