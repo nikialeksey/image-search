@@ -15,17 +15,16 @@ android {
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+    implementation project(':images:api')
     implementation Deps.KOTLIN_CORE
-    implementation Deps.ANDROID_CORE
-
-    testImplementation Deps.JUNIT
+    implementation Deps.PAGING
+    implementation Deps.RETROFIT
 }
