@@ -20,7 +20,13 @@ internal class ImagesImpl(
     }
 
     override fun search(filter: String): DataSource.Factory<Int, Image> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return SearchImagesDataSourceFactory(
+            api,
+            apiKey,
+            filter,
+            pageSize,
+            initialPage
+        )
     }
 
     override fun pageSize(): Int {

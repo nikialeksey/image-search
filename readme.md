@@ -16,3 +16,7 @@ Then, install it:
 ```bash
 ./gradlew installDebug
 ```
+
+## Thanks
+
+Icons from [flaticon.com](https://www.flaticon.com/packs/multimedia-collection)

@@ -25,6 +25,4 @@ internal interface FlickrApi {
         @Query("format") format: String = "json",
         @Query("nojsoncallback") noJsonCallback: Int = 1
     ): Call<PhotosResponse>
-
-    class Api
 }

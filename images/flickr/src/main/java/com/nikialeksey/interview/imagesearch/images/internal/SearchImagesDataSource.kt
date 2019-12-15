@@ -7,9 +7,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-internal class RecentImagesDataSource(
+internal class SearchImagesDataSource(
     val api: FlickrApi,
     val apiKey: String,
+    val filter: String,
     val pageSize: Int,
     val initialPage: Int
 ) : PageKeyedDataSource<Int, Image>() {
@@ -18,7 +19,7 @@ internal class RecentImagesDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Image>
     ) {
-        api.getRecent(initialPage, pageSize, apiKey)
+        api.search(filter, initialPage, pageSize, apiKey)
             .enqueue(object : Callback<PhotosResponse> {
                 override fun onResponse(
                     call: Call<PhotosResponse>,
@@ -38,7 +39,7 @@ internal class RecentImagesDataSource(
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Image>) {
-        api.getRecent(params.key, pageSize, apiKey)
+        api.search(filter, params.key, pageSize, apiKey)
             .enqueue(object : Callback<PhotosResponse> {
                 override fun onResponse(
                     call: Call<PhotosResponse>,
@@ -63,7 +64,7 @@ internal class RecentImagesDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Image>) {
-        api.getRecent(params.key, pageSize, apiKey)
+        api.search(filter, params.key, pageSize, apiKey)
             .enqueue(object : Callback<PhotosResponse> {
                 override fun onResponse(
                     call: Call<PhotosResponse>,

@@ -16,6 +16,9 @@ android {
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
     }
+    dataBinding {
+        enabled = true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -25,14 +28,17 @@ android {
 
 dependencies {
     implementation project(':images:api')
+    implementation project(':dict')
 
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
     implementation Deps.CONSTRAINT_LAYOUT
     implementation Deps.RECYCLER_VIEW
     implementation Deps.PAGING
-    implementation Deps.VIEW_MODEL
+
     implementation Deps.LIVE_DATA
+    implementation Deps.VIEW_MODEL
+    kapt Deps.VIEW_MODEL_COMPILER
 
     implementation Deps.GLIDE
     kapt Deps.GLIDE

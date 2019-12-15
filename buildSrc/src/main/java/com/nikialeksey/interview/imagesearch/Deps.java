@@ -34,6 +34,7 @@ public class Deps {
             "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0",
             "androidx.lifecycle:lifecycle-extensions:2.1.0"
     };
+    public static final String VIEW_MODEL_COMPILER = "androidx.lifecycle:lifecycle-compiler:2.1.0";
     public static final String LIVE_DATA = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.1.0";
 
     // Paging
