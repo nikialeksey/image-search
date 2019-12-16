@@ -4,6 +4,8 @@ import android.app.Application
 import com.nikialeksey.interview.imagesearch.images.Images
 import com.nikialeksey.interview.imagesearch.images.ImagesModule
 import com.nikialeksey.interview.imagesearch.images.ImagesProvider
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,9 +16,16 @@ class Application : Application(), ImagesProvider {
     override fun onCreate() {
         super.onCreate()
 
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.FLICKR_ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .build()
+            )
             .build()
 
         imagesModule = ImagesModule(

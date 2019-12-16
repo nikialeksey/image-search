@@ -65,6 +65,7 @@ dependencies {
     implementation Deps.ANDROID_CORE
     implementation Deps.NAVIGATION
     implementation Deps.RETROFIT
+    implementation Deps.OKHTTP
 
     testImplementation Deps.JUNIT
 
