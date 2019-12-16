@@ -3,16 +3,9 @@ import com.nikialeksey.interview.imagesearch.Deps
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco-android'
 
 android {
-    Properties properties = new Properties()
-    def propsFile = project.rootProject.file('local.properties')
-    if (propsFile.exists()) {
-        properties.load(propsFile.newDataInputStream())
-    }
-
     compileSdkVersion App.COMPILE_SDK_VERSION
     buildToolsVersion App.BUILD_TOOLS_VERSION
     defaultConfig {
@@ -22,9 +15,6 @@ android {
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "FLICKR_API_KEY", "\"${properties.getProperty("flickr.api.key", "")}\""
-        buildConfigField "String", "FLICKR_ENDPOINT", "\"https://www.flickr.com\""
     }
     buildTypes {
         release {
@@ -55,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation project(':di')
     implementation project(':search:api')
     implementation project(':search:simple')
     implementation project(':show:simple')

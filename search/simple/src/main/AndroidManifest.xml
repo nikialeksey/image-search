@@ -1,1 +1,5 @@
-<manifest package="com.nikialeksey.interview.imagesearch.search.impl" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nikialeksey.interview.imagesearch.search.impl">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

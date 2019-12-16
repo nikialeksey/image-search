@@ -1,5 +1,4 @@
 import com.nikialeksey.interview.imagesearch.App
-import com.nikialeksey.interview.imagesearch.Deps
 
 apply plugin: 'com.android.library'
 

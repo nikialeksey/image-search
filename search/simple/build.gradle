@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation project(':di')
     implementation project(':search:api')
     implementation project(':images:api')
     implementation project(':dict')

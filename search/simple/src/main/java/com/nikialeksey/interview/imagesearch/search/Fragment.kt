@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.nikialeksey.interview.imagesearch.di.AppComponent
 import com.nikialeksey.interview.imagesearch.images.Image
-import com.nikialeksey.interview.imagesearch.images.ImagesProvider
 import com.nikialeksey.interview.imagesearch.images.ProgressState
 import com.nikialeksey.interview.imagesearch.search.impl.BR
 import com.nikialeksey.interview.imagesearch.search.impl.R
@@ -25,27 +25,30 @@ import kotlinx.android.synthetic.main.fragment_search.*
 
 class Fragment : Fragment() {
 
-    private lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModel: ScreenViewModel
-    private lateinit var navigation: SearchNavigation
+    private lateinit var screen: Screen
+    private val viewModel: ScreenViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return if (ScreenViewModel::class.java == modelClass) {
+                    @Suppress("UNCHECKED_CAST")
+                    ScreenViewModel(screen.images()) as T
+                } else {
+                    throw IllegalArgumentException(
+                        "Unexpected model class: ${modelClass.name}"
+                    )
+                }
+            }
+        }
+    }
     private var adapter = ImagesAdapter({ image ->
-        navigation.openImage(findNavController(), image)
+        screen.navigation().openImage(findNavController(), image)
     }, {
         viewModel.imagesState.value?.retry()
     })
-    private val imagesObserver = Observer<PagedList<Image>> {
-        adapter.submitList(it)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navigation = activity as SearchNavigation
-        viewModelFactory = ViewModelFactory(
-            context.applicationContext as ImagesProvider
-        )
-        viewModel = ViewModelProviders
-            .of(this, viewModelFactory)
-            .get(ScreenViewModel::class.java)
+        screen = (context.applicationContext as AppComponent).searchScreen()
     }
 
     override fun onCreateView(
@@ -76,27 +79,13 @@ class Fragment : Fragment() {
         )
         search_result.adapter = adapter
 
-        viewModel.imagesResult.observe(this, imagesObserver)
-        viewModel.imagesProgress.observe(this, Observer<ProgressState> { adapter.updateLoadingState(it) })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.imagesResult.removeObserver(imagesObserver)
-    }
-
-    inner class ViewModelFactory(
-        private val imagesProvider: ImagesProvider
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return if (ScreenViewModel::class.java == modelClass) {
-                @Suppress("UNCHECKED_CAST")
-                ScreenViewModel(imagesProvider.images()) as T
-            } else {
-                throw IllegalArgumentException(
-                    "Unexpected model class: ${modelClass.name}"
-                )
-            }
-        }
+        viewModel.imagesResult.observe(
+            this,
+            Observer<PagedList<Image>> { adapter.submitList(it) }
+        )
+        viewModel.imagesProgress.observe(
+            this,
+            Observer<ProgressState> { adapter.updateLoadingState(it) }
+        )
     }
 }
