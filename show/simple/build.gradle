@@ -31,6 +31,7 @@ dependencies {
 
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
+    implementation Deps.NAVIGATION
 
     implementation Deps.LIVE_DATA
     implementation Deps.VIEW_MODEL
