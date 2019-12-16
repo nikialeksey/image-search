@@ -12,10 +12,33 @@
 
     </data>
 
-    <ImageView
-        android:id="@+id/show_image"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:url="@{model.url}" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_back"
+                android:tint="?android:textColorPrimary"
+                android:onClick="@{() -> model.onBackClick()}"/>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/show_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:url="@{model.url}" />
+
+    </FrameLayout>
 
 </layout>
