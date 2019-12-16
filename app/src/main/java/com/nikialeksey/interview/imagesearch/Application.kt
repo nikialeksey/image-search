@@ -1,17 +1,17 @@
 package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
-import com.nikialeksey.interview.imagesearch.images.Images
-import com.nikialeksey.interview.imagesearch.images.ImagesModule
-import com.nikialeksey.interview.imagesearch.images.ImagesProvider
+import com.nikialeksey.interview.imagesearch.di.AppComponent
+import com.nikialeksey.interview.imagesearch.images.FlickrImagesProvider
+import com.nikialeksey.interview.imagesearch.search.Screen
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Application : Application(), ImagesProvider {
+class Application : Application(), AppComponent {
 
-    private lateinit var imagesModule: ImagesModule
+    private lateinit var searchScreen: Screen
 
     override fun onCreate() {
         super.onCreate()
@@ -19,24 +19,17 @@ class Application : Application(), ImagesProvider {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.FLICKR_ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
                     .build()
             )
-            .build()
 
-        imagesModule = ImagesModule(
-            retrofit,
-            BuildConfig.FLICKR_API_KEY,
-            20,
-            1
-        )
+        searchScreen = SimpleSearchScreen(FlickrImagesProvider(retrofit))
     }
 
-    override fun images(): Images {
-        return imagesModule.images()
+    override fun searchScreen(): Screen {
+        return searchScreen
     }
 }
