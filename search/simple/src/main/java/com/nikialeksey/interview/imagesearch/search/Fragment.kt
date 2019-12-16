@@ -17,6 +17,7 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.ImagesProvider
+import com.nikialeksey.interview.imagesearch.images.ProgressState
 import com.nikialeksey.interview.imagesearch.search.impl.BR
 import com.nikialeksey.interview.imagesearch.search.impl.R
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -27,9 +28,11 @@ class Fragment : Fragment() {
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: ScreenViewModel
     private lateinit var navigation: SearchNavigation
-    private var adapter = ImagesAdapter { image ->
+    private var adapter = ImagesAdapter({ image ->
         navigation.openImage(findNavController(), image)
-    }
+    }, {
+        viewModel.imagesState.value?.retry()
+    })
     private val imagesObserver = Observer<PagedList<Image>> {
         adapter.submitList(it)
     }
@@ -73,12 +76,13 @@ class Fragment : Fragment() {
         )
         search_result.adapter = adapter
 
-        viewModel.imagesLive.observe(this, imagesObserver)
+        viewModel.imagesResult.observe(this, imagesObserver)
+        viewModel.imagesProgress.observe(this, Observer<ProgressState> { adapter.updateLoadingState(it) })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.imagesLive.removeObserver(imagesObserver)
+        viewModel.imagesResult.removeObserver(imagesObserver)
     }
 
     inner class ViewModelFactory(

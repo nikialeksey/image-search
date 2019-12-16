@@ -25,4 +25,5 @@ android {
 dependencies {
     implementation Deps.KOTLIN_CORE
     implementation Deps.PAGING
+    implementation Deps.LIVE_DATA
 }

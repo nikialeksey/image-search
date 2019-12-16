@@ -10,17 +10,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.Images
+import com.nikialeksey.interview.imagesearch.images.ImagesState
+import com.nikialeksey.interview.imagesearch.images.ProgressState
 
 
 class ScreenViewModel(
     private val images: Images
 ) : ViewModel() {
 
-    val imagesLive: LiveData<PagedList<Image>>
+    val imagesState: LiveData<ImagesState>
+    val imagesResult: LiveData<PagedList<Image>>
+    val imagesProgress: LiveData<ProgressState>
 
     val filter: MutableLiveData<String> = MutableLiveData()
     val searchMode: ObservableBoolean = ObservableBoolean(false)
@@ -32,12 +35,14 @@ class ScreenViewModel(
         }
 
     init {
-        imagesLive = Transformations.switchMap(filter) {
-            if (searchMode.get()) {
-                searchImages()
-            } else {
-                recentImages()
-            }
+        imagesState = Transformations.map(filter) {
+            images.search(it)
+        }
+        imagesResult = Transformations.switchMap(imagesState) {
+            it.images()
+        }
+        imagesProgress = Transformations.switchMap(imagesState) {
+            it.progress()
         }
         filter.value = ""
     }
@@ -45,20 +50,6 @@ class ScreenViewModel(
     fun onCloseSearchMode() {
         searchMode.set(false)
         filter.value = ""
-    }
-
-    private fun searchImages(): LiveData<PagedList<Image>> {
-        return LivePagedListBuilder(
-            images.search(filter.value ?: ""),
-            images.pageSize()
-        ).build()
-    }
-
-    private fun recentImages(): LiveData<PagedList<Image>> {
-        return LivePagedListBuilder(
-            images.resent(),
-            images.pageSize()
-        ).build()
     }
 
     companion object {
