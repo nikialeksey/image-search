@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nikialeksey.interview.imagesearch.show.impl">
+
+    <application android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+        <activity android:name="com.nikialeksey.interview.imagesearch.show.BackButtonTest$Activity" />
+    </application>
+
+</manifest>
