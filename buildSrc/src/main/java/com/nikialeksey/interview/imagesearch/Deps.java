@@ -45,7 +45,7 @@ public class Deps {
             "com.squareup.retrofit2:retrofit:2.7.0",
             "com.squareup.retrofit2:converter-gson:2.7.0"
     };
-    public static final String OKHTTP[] = {
+    public static final String[] OKHTTP = {
             "com.squareup.okhttp3:okhttp:4.2.2",
             "com.squareup.okhttp3:logging-interceptor:4.2.2"
     };
