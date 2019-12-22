@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-    implementation project(':di')
     implementation project(':search:api')
     implementation project(':search:simple')
     implementation project(':show:simple')

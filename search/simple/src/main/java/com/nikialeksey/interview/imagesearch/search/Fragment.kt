@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.nikialeksey.interview.imagesearch.di.AppComponent
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.ProgressState
 import com.nikialeksey.interview.imagesearch.search.impl.BR
@@ -48,7 +47,7 @@ class Fragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        screen = (context.applicationContext as AppComponent).searchScreen()
+        screen = (context.applicationContext as App).searchScreen()
     }
 
     override fun onCreateView(

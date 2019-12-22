@@ -1,5 +1,4 @@
 include ':app'
-include ':di'
 include ':dict'
 include ':search:api'
 include ':search:simple'

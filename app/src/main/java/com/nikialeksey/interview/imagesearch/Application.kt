@@ -1,15 +1,15 @@
 package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
-import com.nikialeksey.interview.imagesearch.di.AppComponent
 import com.nikialeksey.interview.imagesearch.images.FlickrImagesProvider
+import com.nikialeksey.interview.imagesearch.search.App
 import com.nikialeksey.interview.imagesearch.search.Screen
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Application : Application(), AppComponent {
+class Application : Application(), App {
 
     private lateinit var searchScreen: Screen
 
