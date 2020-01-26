@@ -2,19 +2,25 @@ package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
 import com.nikialeksey.interview.imagesearch.images.FakeImages
-import com.nikialeksey.interview.imagesearch.search.App
-import com.nikialeksey.interview.imagesearch.search.Screen
 
-class Application : Application(), App {
+class Application : Application(),
+    com.nikialeksey.interview.imagesearch.search.App,
+    com.nikialeksey.interview.imagesearch.show.App {
 
-    private lateinit var searchScreen: Screen
+    private lateinit var searchScreen: com.nikialeksey.interview.imagesearch.search.Screen
+    private lateinit var showScreen: com.nikialeksey.interview.imagesearch.show.Screen
 
     override fun onCreate() {
         super.onCreate()
         searchScreen = SimpleSearchScreen(FakeImages(10))
+        showScreen = SimpleShowScreen()
     }
 
-    override fun searchScreen(): Screen {
+    override fun searchScreen(): com.nikialeksey.interview.imagesearch.search.Screen {
         return searchScreen
+    }
+
+    override fun showScreen(): com.nikialeksey.interview.imagesearch.show.Screen {
+        return showScreen
     }
 }
