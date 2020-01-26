@@ -1,10 +1,10 @@
-package com.nikialeksey.interview.imagesearch.images.internal
+package com.nikialeksey.interview.imagesearch.images
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface FlickrApi {
+interface FlickrApi {
     @GET("services/rest/")
     fun search(
         @Query("text") filter: String,

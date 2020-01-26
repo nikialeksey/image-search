@@ -1,7 +1,8 @@
 package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
-import com.nikialeksey.interview.imagesearch.images.FlickrImagesProvider
+import com.nikialeksey.interview.imagesearch.images.FlickrApi
+import com.nikialeksey.interview.imagesearch.images.FlickrImages
 import com.nikialeksey.interview.imagesearch.search.App
 import com.nikialeksey.interview.imagesearch.search.Screen
 import okhttp3.OkHttpClient
@@ -26,7 +27,16 @@ class Application : Application(), App {
                     .build()
             )
 
-        searchScreen = SimpleSearchScreen(FlickrImagesProvider(retrofit))
+        val images = FlickrImages(
+            api = retrofit
+                .baseUrl(BuildConfig.FLICKR_ENDPOINT)
+                .build()
+                .create(FlickrApi::class.java),
+            apiKey = BuildConfig.FLICKR_API_KEY,
+            pageSize = 20,
+            initialPage = 1
+        )
+        searchScreen = SimpleSearchScreen(images)
     }
 
     override fun searchScreen(): Screen {

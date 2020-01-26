@@ -1,33 +1,23 @@
-package com.nikialeksey.interview.imagesearch.images.internal
+package com.nikialeksey.interview.imagesearch.images
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.nikialeksey.interview.imagesearch.images.Image
-import com.nikialeksey.interview.imagesearch.images.Images
-import com.nikialeksey.interview.imagesearch.images.ImagesState
-import com.nikialeksey.interview.imagesearch.images.ProgressState
+import com.nikialeksey.interview.imagesearch.images.internal.ImagesDataSourceFactory
 
-internal class ImagesImpl(
-    val api: FlickrApi,
-    val apiKey: String,
-    val pageSize: Int,
-    val initialPage: Int
+class FakeImages(
+    private val pageSize: Int,
+    private val imagesCount: Int = 30 // images count in assets folder
 ) : Images {
-
     override fun search(filter: String): ImagesState {
         val progressState = MutableLiveData<ProgressState>()
         val sourceFactory = ImagesDataSourceFactory(
-            initialPage,
-            if (filter.isEmpty()) {
-                { page -> api.getRecent(page, pageSize, apiKey) }
-            } else {
-                { page -> api.search(filter, page, pageSize, apiKey) }
-            },
+            pageSize,
+            imagesCount,
             progressState
         )
-        val images =  LivePagedListBuilder(
+        val images = LivePagedListBuilder(
             sourceFactory,
             pageSize
         ).build()
@@ -42,7 +32,7 @@ internal class ImagesImpl(
             }
 
             override fun retry() {
-                sourceFactory.source.value?.retry()
+                // ignored
             }
         }
     }

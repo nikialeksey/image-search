@@ -1,6 +1,7 @@
 package com.nikialeksey.interview.imagesearch.images.internal
 
 import com.nikialeksey.interview.imagesearch.images.Image
+import com.nikialeksey.interview.imagesearch.images.PhotosResponse
 
 internal class ImageFlickr(
     val photo: PhotosResponse.Photo

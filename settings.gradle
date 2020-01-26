@@ -4,6 +4,7 @@ include ':search:api'
 include ':search:simple'
 include ':show:simple'
 include ':images:api'
+include ':images:fake'
 include ':images:flickr'
 
 rootProject.name='ImageSearch'
