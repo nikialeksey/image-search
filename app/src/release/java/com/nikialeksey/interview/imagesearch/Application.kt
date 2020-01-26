@@ -3,16 +3,17 @@ package com.nikialeksey.interview.imagesearch
 import android.app.Application
 import com.nikialeksey.interview.imagesearch.images.FlickrApi
 import com.nikialeksey.interview.imagesearch.images.FlickrImages
-import com.nikialeksey.interview.imagesearch.search.App
-import com.nikialeksey.interview.imagesearch.search.Screen
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Application : Application(), App {
+class Application : Application(),
+    com.nikialeksey.interview.imagesearch.search.App,
+    com.nikialeksey.interview.imagesearch.show.App {
 
-    private lateinit var searchScreen: Screen
+    private lateinit var searchScreen: com.nikialeksey.interview.imagesearch.search.Screen
+    private lateinit var showScreen: com.nikialeksey.interview.imagesearch.show.Screen
 
     override fun onCreate() {
         super.onCreate()
@@ -37,9 +38,15 @@ class Application : Application(), App {
             initialPage = 1
         )
         searchScreen = SimpleSearchScreen(images)
+
+        showScreen = SimpleShowScreen()
     }
 
-    override fun searchScreen(): Screen {
+    override fun searchScreen(): com.nikialeksey.interview.imagesearch.search.Screen {
         return searchScreen
+    }
+
+    override fun showScreen(): com.nikialeksey.interview.imagesearch.show.Screen {
+        return showScreen
     }
 }

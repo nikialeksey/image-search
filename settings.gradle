@@ -1,8 +1,12 @@
 include ':app'
 include ':dict'
+
 include ':search:api'
 include ':search:simple'
+
+include ':show:api'
 include ':show:simple'
+
 include ':images:api'
 include ':images:fake'
 include ':images:flickr'

@@ -4,7 +4,6 @@ import com.nikialeksey.interview.imagesearch.Deps
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco-android'
 
 android {
@@ -15,18 +14,6 @@ android {
         targetSdkVersion App.TARGET_SDK_VERSION
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
-        release {
-            minifyEnabled false
-            consumerProguardFiles 'proguard-rules.pro'
-        }
     }
 
     packagingOptions {
@@ -40,15 +27,7 @@ android {
 }
 
 dependencies {
-    implementation project(':dict')
-    implementation project(':show:api')
-
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
     implementation Deps.NAVIGATION
-
-    implementation Deps.GLIDE
-    kapt Deps.GLIDE_COMPILER
-
-    androidTestImplementation Deps.INSTRUMENTED
 }

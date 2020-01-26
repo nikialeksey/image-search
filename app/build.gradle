@@ -20,9 +20,6 @@ android {
         targetSdkVersion App.TARGET_SDK_VERSION
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
-
-        buildConfigField "String", "FLICKR_API_KEY", "\"${properties.getProperty("flickr.api.key", "")}\""
-        buildConfigField "String", "FLICKR_ENDPOINT", "\"https://www.flickr.com\""
     }
     signingConfigs {
         debug {
@@ -34,6 +31,9 @@ android {
             testCoverageEnabled true
             signingConfig signingConfigs.debug
             debuggable true
+
+            buildConfigField "String", "FLICKR_API_KEY", "\"${properties.getProperty("flickr.api.key", "")}\""
+            buildConfigField "String", "FLICKR_ENDPOINT", "\"https://www.flickr.com\""
         }
         instrumented {
             matchingFallbacks = ['debug']
@@ -43,6 +43,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "FLICKR_API_KEY", "\"${properties.getProperty("flickr.api.key", "")}\""
+            buildConfigField "String", "FLICKR_ENDPOINT", "\"https://www.flickr.com\""
         }
     }
     dataBinding {
@@ -62,7 +65,10 @@ android {
 dependencies {
     implementation project(':search:api')
     implementation project(':search:simple')
+
+    implementation project(':show:api')
     implementation project(':show:simple')
+
     implementation project(':images:api')
     debugImplementation project(':images:flickr')
     releaseImplementation project(':images:flickr')
