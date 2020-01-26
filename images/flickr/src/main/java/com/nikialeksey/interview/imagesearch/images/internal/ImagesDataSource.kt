@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.nikialeksey.interview.imagesearch.images.Image
+import com.nikialeksey.interview.imagesearch.images.PhotosResponse
 import com.nikialeksey.interview.imagesearch.images.ProgressState
 import retrofit2.Call
 import retrofit2.Callback

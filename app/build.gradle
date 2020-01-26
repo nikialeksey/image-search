@@ -6,6 +6,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'jacoco-android'
 
 android {
+    Properties properties = new Properties()
+    def propsFile = project.rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        properties.load(propsFile.newDataInputStream())
+    }
+
     compileSdkVersion App.COMPILE_SDK_VERSION
     buildToolsVersion App.BUILD_TOOLS_VERSION
     defaultConfig {
@@ -14,10 +20,25 @@ android {
         targetSdkVersion App.TARGET_SDK_VERSION
         versionCode App.VERSION_CODE
         versionName App.VERSION_NAME
+
+        buildConfigField "String", "FLICKR_API_KEY", "\"${properties.getProperty("flickr.api.key", "")}\""
+        buildConfigField "String", "FLICKR_ENDPOINT", "\"https://www.flickr.com\""
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+        }
     }
     buildTypes {
         debug {
             testCoverageEnabled true
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+        instrumented {
+            matchingFallbacks = ['debug']
+            signingConfig signingConfigs.debug
+            debuggable true
         }
         release {
             minifyEnabled false
@@ -43,7 +64,9 @@ dependencies {
     implementation project(':search:simple')
     implementation project(':show:simple')
     implementation project(':images:api')
-    implementation project(':images:flickr')
+    debugImplementation project(':images:flickr')
+    releaseImplementation project(':images:flickr')
+    instrumentedImplementation project(':images:fake')
 
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE

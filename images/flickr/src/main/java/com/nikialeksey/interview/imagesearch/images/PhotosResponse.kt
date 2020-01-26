@@ -1,12 +1,12 @@
-package com.nikialeksey.interview.imagesearch.images.internal
+package com.nikialeksey.interview.imagesearch.images
 
-internal data class PhotosResponse(
+data class PhotosResponse(
     val photos: Photos?,
     val stat: String,
     val code: Int,
     val message: String?
 ) {
-    internal data class Photos(
+    data class Photos(
         val page: Int,
         val pages: Int,
         val perpage: Int,
@@ -14,7 +14,7 @@ internal data class PhotosResponse(
         val photo: List<Photo>
     )
 
-    internal data class Photo(
+    data class Photo(
         val id: String,
         val owner: String,
         val secret: String,

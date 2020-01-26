@@ -4,15 +4,15 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.Images
-import com.nikialeksey.interview.imagesearch.images.ImagesProvider
 import com.nikialeksey.interview.imagesearch.search.Navigation
 import com.nikialeksey.interview.imagesearch.search.Screen
 
 class SimpleSearchScreen(
-    private val imagesProvider: ImagesProvider
+    private val images: Images
 ) : Screen {
+
     override fun images(): Images {
-        return imagesProvider.images()
+        return images
     }
 
     override fun navigation(): Navigation {
