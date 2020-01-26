@@ -57,4 +57,11 @@ public class Deps {
     // Tests
     public static final String JACOCO_ANDROID_PLUGIN = "com.dicedmelon.gradle:jacoco-android:0.1.4";
     public static final String JUNIT = "junit:junit:4.12";
+    public static final String[] INSTRUMENTED = {
+            "androidx.test:runner:1.2.0",
+            "androidx.test.ext:junit-ktx:1.1.1",
+            "androidx.test:rules:1.2.0",
+            "androidx.test.espresso:espresso-core:3.2.0",
+            "androidx.test.uiautomator:uiautomator:2.2.0"
+    };
 }

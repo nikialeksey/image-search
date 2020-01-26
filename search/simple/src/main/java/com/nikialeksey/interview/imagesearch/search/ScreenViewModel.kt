@@ -5,7 +5,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -26,11 +25,11 @@ class ScreenViewModel(
     val imagesProgress: LiveData<ProgressState>
 
     val filter: MutableLiveData<String> = MutableLiveData()
-    val searchMode: ObservableBoolean = ObservableBoolean(false)
+    val searchMode: MutableLiveData<Boolean> = MutableLiveData(false)
     val onSearchFocusChangeListener: View.OnFocusChangeListener =
         View.OnFocusChangeListener { _, focus ->
             if (focus) {
-                searchMode.set(focus)
+                searchMode.value = focus
             }
         }
 
@@ -48,7 +47,7 @@ class ScreenViewModel(
     }
 
     fun onCloseSearchMode() {
-        searchMode.set(false)
+        searchMode.value = false
         filter.value = ""
     }
 
@@ -63,10 +62,11 @@ class ScreenViewModel(
 
         @BindingAdapter("focus")
         @JvmStatic
-        fun bindFocus(view: EditText, focus: ObservableBoolean) {
-            if (focus.get() && !view.hasFocus()) {
+        fun bindFocus(view: EditText, focus: MutableLiveData<Boolean>) {
+            val focusValue = focus.value ?: false
+            if (focusValue && !view.hasFocus()) {
                 view.requestFocus()
-            } else if (!focus.get() && view.hasFocus()) {
+            } else if (!focusValue && view.hasFocus()) {
                 view.clearFocus()
 
                 val imm =
