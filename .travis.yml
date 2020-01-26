@@ -33,8 +33,6 @@ before_install:
   # Install the system image
   - sdkmanager "system-images;android-23;default;armeabi-v7a"
 
-
-
 script:
   - ./gradlew build jacocoTestReport assembleAndroidTest
   - echo no | avdmanager create avd --force -n test -k "system-images;android-23;default;armeabi-v7a"

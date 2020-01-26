@@ -79,11 +79,11 @@ class Fragment : Fragment() {
         search_result.adapter = adapter
 
         viewModel.imagesResult.observe(
-            this,
+            viewLifecycleOwner,
             Observer<PagedList<Image>> { adapter.submitList(it) }
         )
         viewModel.imagesProgress.observe(
-            this,
+            viewLifecycleOwner,
             Observer<ProgressState> { adapter.updateLoadingState(it) }
         )
     }

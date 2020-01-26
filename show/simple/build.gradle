@@ -20,6 +20,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.pro'
@@ -43,18 +46,8 @@ dependencies {
     implementation Deps.ANDROID_CORE
     implementation Deps.NAVIGATION
 
-    implementation Deps.LIVE_DATA
-    implementation Deps.VIEW_MODEL
-    kapt Deps.VIEW_MODEL_COMPILER
-
     implementation Deps.GLIDE
-    kapt Deps.GLIDE
+    kapt Deps.GLIDE_COMPILER
 
-    testImplementation Deps.JUNIT
-
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.1'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation Deps.INSTRUMENTED
 }
