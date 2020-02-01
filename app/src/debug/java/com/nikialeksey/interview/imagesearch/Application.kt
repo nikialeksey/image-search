@@ -1,6 +1,7 @@
 package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
+import com.bumptech.glide.Glide
 import com.nikialeksey.interview.imagesearch.images.FlickrApi
 import com.nikialeksey.interview.imagesearch.images.FlickrImages
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ class Application : Application(),
                     .addInterceptor(loggingInterceptor)
                     .build()
             )
+        val glide = Glide.with(this)
 
         val images = FlickrImages(
             api = retrofit
@@ -37,9 +39,9 @@ class Application : Application(),
             pageSize = 20,
             initialPage = 1
         )
-        searchScreen = SimpleSearchScreen(images)
+        searchScreen = SimpleSearchScreen(images, glide)
 
-        showScreen = SimpleShowScreen()
+        showScreen = SimpleShowScreen(glide)
     }
 
     override fun searchScreen(): com.nikialeksey.interview.imagesearch.search.Screen {

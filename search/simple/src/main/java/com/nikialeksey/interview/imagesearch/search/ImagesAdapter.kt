@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.ProgressState
 import com.nikialeksey.interview.imagesearch.search.impl.R
@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.item_search.view.*
 import java.lang.IllegalArgumentException
 
 class ImagesAdapter(
+    private val glide: RequestManager,
     private val imageClickListener: (image: Image) -> Unit,
     private val retryListener: () -> Unit
 ) : PagedListAdapter<Image, RecyclerView.ViewHolder>(
@@ -107,8 +108,7 @@ class ImagesAdapter(
         fun bind(image: Image) {
             imageClickListener.image = image
             itemView.setOnClickListener(imageClickListener)
-            Glide
-                .with(itemView.context)
+            glide
                 .load(image.thumbnailUrl())
                 .into(itemView.search_item_image)
         }

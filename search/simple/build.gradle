@@ -47,5 +47,4 @@ dependencies {
     kapt Deps.VIEW_MODEL_COMPILER
 
     implementation Deps.GLIDE
-    kapt Deps.GLIDE_COMPILER
 }

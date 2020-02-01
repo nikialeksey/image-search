@@ -21,7 +21,7 @@ Then, install it:
 ### Fake images
 
 ```bash
-./gradlew installIntrumented
+./gradlew installInstrumented
 ```
 
 ## Architecture aspects

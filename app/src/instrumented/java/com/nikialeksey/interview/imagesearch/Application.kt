@@ -1,6 +1,7 @@
 package com.nikialeksey.interview.imagesearch
 
 import android.app.Application
+import com.bumptech.glide.Glide
 import com.nikialeksey.interview.imagesearch.images.FakeImages
 
 class Application : Application(),
@@ -12,8 +13,10 @@ class Application : Application(),
 
     override fun onCreate() {
         super.onCreate()
-        searchScreen = SimpleSearchScreen(FakeImages(10))
-        showScreen = SimpleShowScreen()
+        val glide = Glide.with(this)
+
+        searchScreen = SimpleSearchScreen(FakeImages(10), glide)
+        showScreen = SimpleShowScreen(glide)
     }
 
     override fun searchScreen(): com.nikialeksey.interview.imagesearch.search.Screen {
