@@ -39,15 +39,20 @@ class Fragment : Fragment() {
             }
         }
     }
-    private var adapter = ImagesAdapter({ image ->
-        screen.navigation().openImage(findNavController(), image)
-    }, {
-        viewModel.imagesState.value?.retry()
-    })
+    private lateinit var adapter: ImagesAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         screen = (context.applicationContext as App).searchScreen()
+        adapter = ImagesAdapter(
+            screen.glide(),
+            { image ->
+                screen.navigation().openImage(findNavController(), image)
+            },
+            {
+                viewModel.imagesState.value?.retry()
+            }
+        )
     }
 
     override fun onCreateView(

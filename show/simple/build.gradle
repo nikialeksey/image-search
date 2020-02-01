@@ -48,7 +48,6 @@ dependencies {
     implementation Deps.NAVIGATION
 
     implementation Deps.GLIDE
-    kapt Deps.GLIDE_COMPILER
 
     androidTestImplementation Deps.INSTRUMENTED
 }

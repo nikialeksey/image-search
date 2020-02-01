@@ -3,6 +3,7 @@ import com.nikialeksey.interview.imagesearch.Deps
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco-android'
 
 android {
@@ -77,8 +78,12 @@ dependencies {
     implementation Deps.KOTLIN_CORE
     implementation Deps.ANDROID_CORE
     implementation Deps.NAVIGATION
+
     implementation Deps.RETROFIT
     implementation Deps.OKHTTP
+
+    implementation Deps.GLIDE
+    kapt Deps.GLIDE_COMPILER
 
     testImplementation Deps.JUNIT
 }
