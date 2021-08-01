@@ -54,11 +54,11 @@
             android:focusable="true"
             android:onClick="@{() -> model.onCloseSearchMode()}"
             android:src="@drawable/ic_cancel"
-            android:tint="?android:textColorPrimary"
             android:visibility="@{model.searchMode ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/search_filter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/search_filter" />
+            app:layout_constraintTop_toTopOf="@+id/search_filter"
+            app:tint="?android:textColorPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_result"
