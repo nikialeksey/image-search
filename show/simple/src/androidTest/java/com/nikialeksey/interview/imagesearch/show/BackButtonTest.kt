@@ -41,21 +41,15 @@ class BackButtonTest {
 
     @Test
     fun backButtonAccessible() {
-        println("1")
         var wasClick = false
-        println("2")
         activityRule.activity.findViewById<View>(R.id.show_back).setOnClickListener {
             wasClick = true
         }
-        println("3")
 
         SystemClock.sleep(TimeUnit.SECONDS.toMillis(2))
-        println("4")
         Espresso.onView(ViewMatchers.withId(R.id.show_back)).perform(clickXY(10, 10))
-        println("5")
 
         Assert.assertThat(wasClick, IsEqual.equalTo(true))
-        println("6")
     }
 
     private fun clickXY(x: Int, y: Int): ViewAction {
@@ -80,10 +74,9 @@ class BackButtonTest {
 
             val args = Bundle()
             args.putString(
-                "url",
+                "thumbnailUrl",
                 "https://2.bp.blogspot.com/-LnJ12R577oI/UvNUhxws84I/AAAAAAAABwQ/JI6NXVZ5SNU/s1600/images+(6).jpg"
             )
-            args.putString("thumbnailUrl", "")
 
             val navHostFragment = NavHostFragment.create(R.navigation.navigation_show, args)
             supportFragmentManager.beginTransaction()

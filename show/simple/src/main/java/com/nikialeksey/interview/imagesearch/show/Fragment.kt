@@ -1,10 +1,21 @@
 package com.nikialeksey.interview.imagesearch.show
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeClipBounds
+import androidx.transition.ChangeTransform
+import androidx.transition.TransitionSet
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.nikialeksey.interview.imagesearch.show.impl.R
 import kotlinx.android.synthetic.main.fragment_show.*
 
@@ -17,19 +28,54 @@ class Fragment : Fragment(R.layout.fragment_show) {
         screen = (context.applicationContext as App).showScreen()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        sharedElementEnterTransition = TransitionSet().apply {
+            addTransition(ChangeTransform())
+            addTransition(ChangeClipBounds())
+            addTransition(ChangeBounds())
+        }
+        if (savedInstanceState == null) {
+            postponeEnterTransition()
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val thumbnailUrl = arguments?.getString("thumbnailUrl")
             ?: throw IllegalArgumentException("Unable to open show screen without thumbnail")
-        val url = arguments?.getString("url")
-            ?: throw IllegalArgumentException("Unable to open show screen without url")
+
+        show_image.transitionName = thumbnailUrl
 
         screen.glide()
-            .load(url)
-            .thumbnail(
-                screen.glide()
-                    .load(thumbnailUrl)
-            )
+            .load(thumbnailUrl)
+            .thumbnail(screen.glide().load(thumbnailUrl))
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    startPostponedEnterTransition()
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    startPostponedEnterTransition()
+                    return false
+                }
+            })
             .into(show_image)
 
         show_back.setOnClickListener {

@@ -16,7 +16,7 @@ import java.lang.IllegalArgumentException
 
 class ImagesAdapter(
     private val glide: RequestManager,
-    private val imageClickListener: (image: Image) -> Unit,
+    private val imageClickListener: (image: Image, shared: View) -> Unit,
     private val retryListener: () -> Unit
 ) : PagedListAdapter<Image, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<Image>() {
@@ -111,6 +111,7 @@ class ImagesAdapter(
             glide
                 .load(image.thumbnailUrl())
                 .into(itemView.search_item_image)
+            itemView.search_item_image.transitionName = image.thumbnailUrl()
         }
 
         fun clear() {
@@ -137,12 +138,12 @@ class ImagesAdapter(
     }
 
     inner class ViewImageClickListener(
-        private val imageClickListener: (image: Image) -> Unit
+        private val imageClickListener: (image: Image, shared: View) -> Unit
     ) : View.OnClickListener {
         var image: Image? = null
 
-        override fun onClick(view: View?) {
-            image?.let { imageClickListener(it) }
+        override fun onClick(view: View) {
+            image?.let { imageClickListener(it, view) }
         }
     }
 }

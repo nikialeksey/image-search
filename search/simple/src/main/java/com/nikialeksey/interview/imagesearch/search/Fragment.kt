@@ -9,14 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.nikialeksey.interview.imagesearch.images.Image
-import com.nikialeksey.interview.imagesearch.images.ProgressState
+import androidx.transition.Fade
+import androidx.transition.TransitionSet
 import com.nikialeksey.interview.imagesearch.search.impl.BR
 import com.nikialeksey.interview.imagesearch.search.impl.R
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -43,11 +41,19 @@ class Fragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        val transition = TransitionSet().apply {
+            addTransition(
+                Fade()
+                    .addTarget(R.id.search_item_image)
+            )
+        }
+        exitTransition = transition
         screen = (context.applicationContext as App).searchScreen()
         adapter = ImagesAdapter(
             screen.glide(),
-            { image ->
-                screen.navigation().openImage(findNavController(), image)
+            { image, shared ->
+                transition.excludeTarget(shared, true)
+                screen.navigation().openImage(findNavController(), image, shared)
             },
             {
                 viewModel.imagesState.value?.retry()
@@ -59,7 +65,7 @@ class Fragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
             inflater,
             R.layout.fragment_search,
@@ -85,11 +91,11 @@ class Fragment : Fragment() {
 
         viewModel.imagesResult.observe(
             viewLifecycleOwner,
-            Observer<PagedList<Image>> { adapter.submitList(it) }
+            { adapter.submitList(it) }
         )
         viewModel.imagesProgress.observe(
             viewLifecycleOwner,
-            Observer<ProgressState> { adapter.updateLoadingState(it) }
+            { adapter.updateLoadingState(it) }
         )
     }
 }
