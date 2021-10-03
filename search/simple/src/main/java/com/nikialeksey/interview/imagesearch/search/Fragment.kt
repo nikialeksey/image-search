@@ -3,6 +3,7 @@ package com.nikialeksey.interview.imagesearch.search
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -61,6 +62,10 @@ class Fragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.root.setOnApplyWindowInsetsListener { view, insets ->
+            view.updatePadding(top = insets.systemWindowInsetTop)
+            insets
+        }
         binding.lifecycleOwner = this
         binding.setVariable(
             BR.model,
