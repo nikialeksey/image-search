@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.ChangeBounds
@@ -48,6 +49,11 @@ class Fragment : Fragment(R.layout.fragment_show) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.root.setOnApplyWindowInsetsListener { view, insets ->
+            view.updatePadding(top = insets.systemWindowInsetTop)
+            insets
+        }
+
         val thumbnailUrl = arguments?.getString("thumbnailUrl")
             ?: throw IllegalArgumentException("Unable to open show screen without thumbnail")
 
