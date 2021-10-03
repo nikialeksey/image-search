@@ -4,7 +4,7 @@ import com.nikialeksey.interview.imagesearch.Deps
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.dicedmelon.gradle.jacoco-android'
+apply from: '../gradle/jacoco.gradle'
 
 android {
     Properties properties = new Properties()
@@ -58,12 +58,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
 }
 

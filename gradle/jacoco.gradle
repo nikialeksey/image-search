@@ -1,0 +1,14 @@
+import com.nikialeksey.interview.imagesearch.Deps
+
+apply plugin: 'com.dicedmelon.gradle.jacoco-android'
+
+project.afterEvaluate { project ->
+    jacoco {
+        toolVersion = Deps.JACOCO_VER
+    }
+
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+        jacoco.excludes = ['jdk.internal.*']
+    }
+}

@@ -6,7 +6,9 @@
         android:name="com.nikialeksey.interview.imagesearch.App"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
-        <activity android:name="com.nikialeksey.interview.imagesearch.show.BackButtonTest$Activity" />
+        <activity
+            android:name="com.nikialeksey.interview.imagesearch.show.BackButtonTest$Activity"
+            android:exported="true" />
     </application>
 
 </manifest>
