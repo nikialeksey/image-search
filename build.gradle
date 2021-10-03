@@ -20,6 +20,19 @@ allprojects {
     }
 }
 
+// workaround to set the needed version of JaCoCo - https://stackoverflow.com/a/65579804/3422245
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { details ->
+                if ('org.jacoco' == details.requested.group) {
+                    details.useVersion Deps.JACOCO_VER
+                }
+            }
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

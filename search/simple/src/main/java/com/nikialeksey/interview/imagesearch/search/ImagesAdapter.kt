@@ -3,6 +3,7 @@ package com.nikialeksey.interview.imagesearch.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +11,8 @@ import com.bumptech.glide.RequestManager
 import com.nikialeksey.interview.imagesearch.images.Image
 import com.nikialeksey.interview.imagesearch.images.ProgressState
 import com.nikialeksey.interview.imagesearch.search.impl.R
-import kotlinx.android.synthetic.main.item_loading.view.*
-import kotlinx.android.synthetic.main.item_search.view.*
+import com.nikialeksey.interview.imagesearch.search.impl.databinding.ItemLoadingBinding
+import com.nikialeksey.interview.imagesearch.search.impl.databinding.ItemSearchBinding
 import java.lang.IllegalArgumentException
 
 class ImagesAdapter(
@@ -21,7 +22,7 @@ class ImagesAdapter(
 ) : PagedListAdapter<Image, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<Image>() {
         override fun areItemsTheSame(oldImage: Image, newImage: Image): Boolean {
-            return oldImage == newImage
+            return oldImage.thumbnailUrl() == newImage.thumbnailUrl()
         }
 
         override fun areContentsTheSame(oldImage: Image, newImage: Image): Boolean {
@@ -35,12 +36,12 @@ class ImagesAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == R.layout.item_search) {
             ImageViewHolder(
-                inflater.inflate(R.layout.item_search, parent, false),
+                ItemSearchBinding.inflate(inflater, parent, false),
                 ViewImageClickListener(imageClickListener)
             )
         } else if (viewType == R.layout.item_loading) {
             LoadingViewHolder(
-                inflater.inflate(R.layout.item_loading, parent, false),
+                ItemLoadingBinding.inflate(inflater, parent, false),
                 retryListener
             )
         } else {
@@ -101,39 +102,39 @@ class ImagesAdapter(
     }
 
     inner class ImageViewHolder(
-        itemView: View,
+        private val binding: ItemSearchBinding,
         private val imageClickListener: ViewImageClickListener
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(image: Image) {
             imageClickListener.image = image
             itemView.setOnClickListener(imageClickListener)
             glide
                 .load(image.thumbnailUrl())
-                .into(itemView.search_item_image)
-            itemView.search_item_image.transitionName = image.thumbnailUrl()
+                .into(binding.searchItemImage)
+            binding.searchItemImage.transitionName = image.thumbnailUrl()
         }
 
         fun clear() {
-            itemView.search_item_image.setImageDrawable(null)
+            binding.searchItemImage.setImageDrawable(null)
         }
     }
 
     inner class LoadingViewHolder(
-        itemView: View,
+        private val binding: ItemLoadingBinding,
         private val onRetry: () -> Unit
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            itemView.loading_retry.setOnClickListener { onRetry() }
+            binding.loadingRetry.setOnClickListener { onRetry() }
         }
 
         fun bind(loadingState: ProgressState) {
-            itemView.loading_progress.visibility = if (loadingState.isInProgress()) View.VISIBLE else View.GONE
-            itemView.loading_message.visibility = if (loadingState.isFailed()) View.VISIBLE else View.GONE
-            itemView.loading_retry.visibility = if (loadingState.isFailed()) View.VISIBLE else View.GONE
+            binding.loadingProgress.isVisible = loadingState.isInProgress()
+            binding.loadingMessage.isVisible = loadingState.isFailed()
+            binding.loadingRetry.isVisible = loadingState.isFailed()
 
-            itemView.loading_message.text = loadingState.message
+            binding.loadingMessage.text = loadingState.message
         }
     }
 

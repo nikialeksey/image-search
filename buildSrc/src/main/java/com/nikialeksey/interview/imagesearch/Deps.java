@@ -1,16 +1,17 @@
 package com.nikialeksey.interview.imagesearch;
 
 public class Deps {
-    private static final String KOTLIN_VER = "1.5.21";
+    private static final String KOTLIN_VER = "1.5.31";
     private static final String NAVIGATION_VER = "2.3.5";
     private static final String GLIDE_VER = "4.10.0";
+    public static final String JACOCO_VER = "0.8.7";
 
     public static final String JACOCO_ANDROID_PLUGIN = "com.dicedmelon.gradle:jacoco-android:0.1.5";
-    public static final String ANDROID_GRADLE = "com.android.tools.build:gradle:7.0.0";
+    public static final String ANDROID_GRADLE = "com.android.tools.build:gradle:7.0.2";
     public static final String KOTLIN_GRADLE = "org.jetbrains.kotlin:kotlin-gradle-plugin:" + KOTLIN_VER;
 
     // Core
-    public static final String KOTLIN_CORE = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" + KOTLIN_VER;
+    public static final String KOTLIN_CORE = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + KOTLIN_VER;
     public static final String[] ANDROID_CORE = {
             "androidx.appcompat:appcompat:1.3.1",
             "androidx.core:core-ktx:1.6.0"
@@ -27,6 +28,9 @@ public class Deps {
             "androidx.constraintlayout:constraintlayout:2.1.0"
     };
     public static final String RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.1.0";
+
+    // Data binding
+    public static final String BINDING_DELEGATE = "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.0-beta02";
 
     // ViewModel
     public static final String[] VIEW_MODEL = {
@@ -56,10 +60,10 @@ public class Deps {
     // Tests
     public static final String JUNIT = "junit:junit:4.12";
     public static final String[] INSTRUMENTED = {
-            "androidx.test:runner:1.2.0",
-            "androidx.test.ext:junit-ktx:1.1.1",
-            "androidx.test:rules:1.2.0",
-            "androidx.test.espresso:espresso-core:3.2.0",
+            "androidx.test:runner:1.4.0",
+            "androidx.test.ext:junit-ktx:1.1.3",
+            "androidx.test:rules:1.4.0",
+            "androidx.test.espresso:espresso-core:3.4.0",
             "androidx.test.uiautomator:uiautomator:2.2.0"
     };
 }

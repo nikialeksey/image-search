@@ -3,14 +3,14 @@
 
     <application
         android:name=".Application"
-        android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
             android:name=".Activity"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

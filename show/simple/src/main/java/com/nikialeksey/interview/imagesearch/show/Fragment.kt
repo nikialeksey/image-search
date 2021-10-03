@@ -12,16 +12,18 @@ import androidx.transition.ChangeBounds
 import androidx.transition.ChangeClipBounds
 import androidx.transition.ChangeTransform
 import androidx.transition.TransitionSet
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.nikialeksey.interview.imagesearch.show.impl.R
-import kotlinx.android.synthetic.main.fragment_show.*
+import com.nikialeksey.interview.imagesearch.show.impl.databinding.FragmentShowBinding
 
 class Fragment : Fragment(R.layout.fragment_show) {
 
     private lateinit var screen: Screen
+    private val binding by viewBinding(FragmentShowBinding::bind)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,7 +51,7 @@ class Fragment : Fragment(R.layout.fragment_show) {
         val thumbnailUrl = arguments?.getString("thumbnailUrl")
             ?: throw IllegalArgumentException("Unable to open show screen without thumbnail")
 
-        show_image.transitionName = thumbnailUrl
+        binding.showImage.transitionName = thumbnailUrl
 
         screen.glide()
             .load(thumbnailUrl)
@@ -76,9 +78,9 @@ class Fragment : Fragment(R.layout.fragment_show) {
                     return false
                 }
             })
-            .into(show_image)
+            .into(binding.showImage)
 
-        show_back.setOnClickListener {
+        binding.showBack.setOnClickListener {
             screen
                 .navigation()
                 .back(findNavController())

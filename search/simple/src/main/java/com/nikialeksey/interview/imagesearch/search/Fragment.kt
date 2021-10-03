@@ -2,11 +2,7 @@ package com.nikialeksey.interview.imagesearch.search
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -15,14 +11,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.transition.Fade
 import androidx.transition.TransitionSet
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nikialeksey.interview.imagesearch.search.impl.BR
 import com.nikialeksey.interview.imagesearch.search.impl.R
-import kotlinx.android.synthetic.main.fragment_search.*
+import com.nikialeksey.interview.imagesearch.search.impl.databinding.FragmentSearchBinding
 
 
-class Fragment : Fragment() {
+class Fragment : Fragment(R.layout.fragment_search) {
 
     private lateinit var screen: Screen
+    private val binding by viewBinding(FragmentSearchBinding::bind)
     private val viewModel: ScreenViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -61,33 +59,19 @@ class Fragment : Fragment() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
-            inflater,
-            R.layout.fragment_search,
-            container,
-            false
-        )
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = this
         binding.setVariable(
             BR.model,
             viewModel
         )
-        binding.lifecycleOwner = this
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        search_result.layoutManager = StaggeredGridLayoutManager(
+        binding.searchResult.layoutManager = StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
         )
-        search_result.adapter = adapter
+        binding.searchResult.adapter = adapter
 
         viewModel.imagesResult.observe(
             viewLifecycleOwner,

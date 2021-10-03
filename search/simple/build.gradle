@@ -3,9 +3,8 @@ import com.nikialeksey.interview.imagesearch.Deps
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.dicedmelon.gradle.jacoco-android'
+apply from: '../../gradle/jacoco.gradle'
 
 android {
     compileSdkVersion App.COMPILE_SDK_VERSION
@@ -19,18 +18,21 @@ android {
     dataBinding {
         enabled = true
     }
+    buildFeatures {
+        viewBinding true
+    }
 
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
 }
 
@@ -46,6 +48,7 @@ dependencies {
     implementation Deps.PAGING
     implementation Deps.NAVIGATION
 
+    implementation Deps.BINDING_DELEGATE
     implementation Deps.LIVE_DATA
     implementation Deps.VIEW_MODEL
     kapt Deps.VIEW_MODEL_COMPILER
