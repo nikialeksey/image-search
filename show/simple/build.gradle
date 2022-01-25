@@ -23,6 +23,8 @@ android {
 
     buildTypes {
         debug {
+        }
+        instrumented {
             testCoverageEnabled true
         }
         release {
@@ -36,12 +38,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility App.JAVA_VERSION
+        targetCompatibility App.JAVA_VERSION
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = App.KT_JVM_TARGET
     }
 
     jacoco {
